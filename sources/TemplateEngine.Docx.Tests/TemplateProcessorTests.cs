@@ -6,15 +6,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TemplateEngine.Docx.Tests.Properties;
+using Xunit;
 
 namespace TemplateEngine.Docx.Tests
 {
-    [TestClass]
     public class TemplateProcessorTests
     {
-        [TestMethod]
+        [Fact]
         public void FillingOneTableWithTwoRowsAndPreserveContentControls()
         {
             var templateDocument = XDocument.Parse(Resources.TemplateWithSingleTable);
@@ -55,11 +53,11 @@ namespace TemplateEngine.Docx.Tests
 
             var documentXml = template.Document.ToString();
 
-            Assert.IsNotNull(expectedDocument.Document);
-            Assert.AreEqual(expectedDocument.Document.ToString(), documentXml);
+            Assert.NotNull(expectedDocument.Document);
+            Assert.Equal(expectedDocument.Document.ToString(), documentXml);
         }
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneTableWithTwoRowsAndRemoveContentControls()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleTable);
@@ -100,11 +98,11 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.IsNotNull(expectedDocument.Document);
-			Assert.AreEqual(expectedDocument.Document.ToString(), documentXml);
+			Assert.NotNull(expectedDocument.Document);
+			Assert.Equal(expectedDocument.Document.ToString(), documentXml);
 		}
 
-        [TestMethod]
+        [Fact]
         public void FillingOneFieldWithValue()
         {
             var templateDocument = XDocument.Parse(Resources.TemplateWithSingleField);
@@ -123,11 +121,11 @@ namespace TemplateEngine.Docx.Tests
 
             var documentXml = template.Document.ToString();
 
-			Assert.IsNotNull(expectedDocument.Document);
-            Assert.AreEqual(expectedDocument.Document.ToString(), documentXml);
+			Assert.NotNull(expectedDocument.Document);
+            Assert.Equal(expectedDocument.Document.ToString(), documentXml);
         }
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneFieldWithValue_ValueContainsLineBreak_ShouldInsertLineBreakToResultDocument()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleField);
@@ -153,11 +151,11 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.IsNotNull(expectedDocument.Document);
-			Assert.AreEqual(expectedDocument.Document.ToString(), documentXml);
+			Assert.NotNull(expectedDocument.Document);
+			Assert.Equal(expectedDocument.Document.ToString(), documentXml);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneFieldWithValueAndRemoveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleField);
@@ -177,10 +175,10 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.AreEqual(expectedDocument.ToString(), documentXml);
+			Assert.Equal(expectedDocument.ToString(), documentXml);
 		}
 
-        [TestMethod]
+        [Fact]
         public void FillingOneFieldWithWrongValue_WillNoticeWithWarning()
         {
             var templateDocument = XDocument.Parse(Resources.TemplateWithSingleField);
@@ -199,10 +197,10 @@ namespace TemplateEngine.Docx.Tests
 
             var documentXml = template.Document.ToString();
 
-            Assert.AreEqual(expectedDocument.ToString(), documentXml);
+            Assert.Equal(expectedDocument.ToString(), documentXml);
         }
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneFieldWithWrongValueAndDisabledErrorsNotifications_NotWillNoticeWithWarning()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleField);
@@ -222,10 +220,10 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.AreEqual(expectedDocument.ToString(), documentXml);
+			Assert.Equal(expectedDocument.ToString(), documentXml);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingFieldInTableHeaderWithValue()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithFieldInTableHeader);
@@ -270,10 +268,10 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.AreEqual(expectedDocument.ToString(), documentXml);
+			Assert.Equal(expectedDocument.ToString(), documentXml);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneTableWithTwoRowsWithWrongValues_WillNoticeWithWarning()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleTable);
@@ -316,11 +314,11 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.AreEqual(expectedDocument.ToString(), documentXml);
+			Assert.Equal(expectedDocument.ToString(), documentXml);
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneFieldWithSeveralTextEntries()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleFieldWithSeveralTextEntries);
@@ -339,10 +337,10 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.AreEqual(expectedDocument.ToString(), documentXml);
+			Assert.Equal(expectedDocument.ToString(), documentXml);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneTableWithAdjacentRows()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleTableWithAdjacentRows);
@@ -385,9 +383,9 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.AreEqual(expectedDocument.ToString(), documentXml);
+			Assert.Equal(expectedDocument.ToString(), documentXml);
 		}
-		[TestMethod]
+		[Fact]
 		public void FillingOneTableWithMergedVerticallyRows()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleTableWithMergedVerticallyRows);
@@ -403,10 +401,10 @@ namespace TemplateEngine.Docx.Tests
 
 			var documentXml = template.Document.ToString();
 
-			Assert.AreEqual(expectedDocument.ToString(), documentXml);
+			Assert.Equal(expectedDocument.ToString(), documentXml);
 		}		
 		
-		[TestMethod]
+		[Fact]
 		public void FillingOneListAndPreserveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleList_document);
@@ -436,11 +434,11 @@ namespace TemplateEngine.Docx.Tests
 			var filledDocument = new TemplateProcessor(templateDocument, templateStyles, templateNumbering)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
 		}		
-		[TestMethod]
+		[Fact]
 		public void FillingOneListAndRemoveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleList_document);
@@ -471,12 +469,12 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(true)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneListWithWrongValues_WillNoticeWithWarning()
 		{
 
@@ -507,15 +505,15 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(true)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
 		}
 
 
 
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneNestedListAndPreserveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleNestedList_document);
@@ -545,11 +543,11 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(false)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
 		}
-		[TestMethod]
+		[Fact]
 		public void FillingOneNestedListAndRemoveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleNestedList_document);
@@ -579,12 +577,12 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(true)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(expectedNumbering.ToString(), filledDocument.NumberingPart.ToString());
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneNestedListInsideTableAndRemoveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithNestedListInsideTable_document);
@@ -618,12 +616,12 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(true)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneNestedListInsideTableAndPreserveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithNestedListInsideTable_document);
@@ -657,12 +655,12 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(false)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneTableInsideListAndPreserveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithTableInsideList_document);
@@ -689,11 +687,11 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(false)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
 		}
-		[TestMethod]
+		[Fact]
 		public void FillingOneTableInsideListAndRemovedContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithTableInsideList_document);
@@ -720,12 +718,12 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(true)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneListAndFieldInsideNestedListAndPreserveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithFieldAndListInsideNestedList_document);
@@ -765,13 +763,13 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(false)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void FillingOneListAndFieldInsideNestedListAndRemoveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithFieldAndListInsideNestedList_document);
@@ -811,12 +809,12 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(true)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingTwoTablesWithListsInsideAndPreverseContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithTwoTablesWithListsInside_document);
@@ -857,12 +855,12 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(false)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingTwoTablesWithListsInsideAndRemoveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithTwoTablesWithListsInside_document);
@@ -903,12 +901,12 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(true)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
-			Assert.AreEqual(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
-			Assert.AreEqual(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedStyles.ToString(), filledDocument.StylesPart.ToString());
+			Assert.Equal(RemoveNsid(expectedNumbering.ToString()), RemoveNsid(filledDocument.NumberingPart.ToString()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingTableWithTwoBlocksAndRemoveContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleTableWithTwoBlocks);
@@ -936,10 +934,10 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(true)
 				.FillContent(valuesToFill);
 			
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingTableWithTwoBlocksAndPreverseContentControl()
 		{
 			var templateDocument = XDocument.Parse(Resources.TemplateWithSingleTableWithTwoBlocks);
@@ -967,10 +965,10 @@ namespace TemplateEngine.Docx.Tests
 				.SetRemoveContentControls(false)
 				.FillContent(valuesToFill);
 
-			Assert.AreEqual(expectedDocument.ToString(), filledDocument.Document.ToString());
+			Assert.Equal(expectedDocument.ToString(), filledDocument.Document.ToString());
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingSingleImageAndRemoveContentControl()
 		{
 			var templateDocumentDocx = Resources.TemplateWithSingleImage;
@@ -994,18 +992,18 @@ namespace TemplateEngine.Docx.Tests
 				resultImage = GetImageFromPart(processor.ImagesPart, 0);
 			}
 
-			Assert.AreEqual(processor.ImagesPart.Count(), 1);
-			Assert.IsNotNull(resultImage);
-			Assert.IsTrue(resultImage.SequenceEqual(newFile));
+			Assert.Equal(processor.ImagesPart.Count(), 1);
+			Assert.NotNull(resultImage);
+			Assert.True(resultImage.SequenceEqual(newFile));
 			
-			Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()), 
+			Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()), 
 				RemoveRembed(processor.Document.ToString().Trim()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingSingleImageAndPreverseContentControl()
 		{
-			var templateDocumentDocx = Resources.TemplateWithSingleImage;
+		    var templateDocumentDocx = Resources.TemplateWithSingleImage;
 			var expectedDocument = XDocument.Parse(Resources.DocumentWithSingleImage);
 
 			var newFile = File.ReadAllBytes("Tesla.jpg");
@@ -1025,18 +1023,18 @@ namespace TemplateEngine.Docx.Tests
 				resultImage = GetImageFromPart(processor.ImagesPart, 0);
 			}
 
-			Assert.AreEqual(processor.ImagesPart.Count(), 1);
-			Assert.IsNotNull(resultImage);
-			Assert.IsTrue(resultImage.SequenceEqual(newFile));
+			Assert.Equal(processor.ImagesPart.Count(), 1);
+			Assert.NotNull(resultImage);
+			Assert.True(resultImage.SequenceEqual(newFile));
 
-			Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()), 
+			Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()), 
 				RemoveRembed(processor.Document.ToString().Trim()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingSingleImage_ImageContentControlNotFound_ShowError()
 		{
-			var templateDocumentDocx = Resources.TemplateEmpty;
+		    var templateDocumentDocx = Resources.TemplateEmpty;
 			var expectedDocument = XDocument.Parse(Resources.DocumentWithSingleImageNotFoundError);
 
 			var newFile = File.ReadAllBytes("Tesla.jpg");
@@ -1053,31 +1051,31 @@ namespace TemplateEngine.Docx.Tests
 					.FillContent(valuesToFill);
 			}
 
-			Assert.AreEqual(processor.ImagesPart.Count(), 0);
+			Assert.Equal(processor.ImagesPart.Count(), 0);
 		
-			Assert.AreEqual(expectedDocument.ToString().Trim(), processor.Document.ToString().Trim());
+			Assert.Equal(expectedDocument.ToString().Trim(), processor.Document.ToString().Trim());
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingImageInsideTable_CorrectFiledItems_Success()
 		{
-			var templateDocumentDocx = Resources.TemplateWithImagesInsideTable;
+		    var templateDocumentDocx = Resources.TemplateWithImagesInsideTable;
 			var expectedDocument = XDocument.Parse(Resources.DocumentWithImagesInsideTable);
 
 			var valuesToFill = new Content(
 				new TableContent("Scientists")
 					.AddRow(new FieldContent("Name", "Nicola Tesla"),
-						new FieldContent("Born", new DateTime(1856, 7, 10).ToShortDateString()),
+						new FieldContent("Born", new DateTime(1856, 7, 10).ToString("d")),
 						new ImageContent("Photo", File.ReadAllBytes("Tesla.jpg")),
 						new FieldContent("Info",
 							"Serbian American inventor, electrical engineer, mechanical engineer, physicist, and futurist best known for his contributions to the design of the modern alternating current (AC) electricity supply system"))
 					.AddRow(new FieldContent("Name", "Thomas Edison"),
-						new FieldContent("Born", new DateTime(1847, 2, 11).ToShortDateString()),
+						new FieldContent("Born", new DateTime(1847, 2, 11).ToString("d")),
 						new ImageContent("Photo", File.ReadAllBytes("Edison.jpg")),
 						new FieldContent("Info",
 							"American inventor and businessman. He developed many devices that greatly influenced life around the world, including the phonograph, the motion picture camera, and the long-lasting, practical electric light bulb."))
 					.AddRow(new FieldContent("Name", "Albert Einstein"),
-						new FieldContent("Born", new DateTime(1879, 3, 14).ToShortDateString()),
+						new FieldContent("Born", new DateTime(1879, 3, 14).ToString("d")),
 						new ImageContent("Photo", File.ReadAllBytes("Einstein.jpg")),
 						new FieldContent("Info",
 							"German-born theoretical physicist. He developed the general theory of relativity, one of the two pillars of modern physics (alongside quantum mechanics). Einstein's work is also known for its influence on the philosophy of science. Einstein is best known in popular culture for his mass–energy equivalence formula E = mc2 (which has been dubbed 'the world's most famous equation')."))
@@ -1094,16 +1092,16 @@ namespace TemplateEngine.Docx.Tests
 					.FillContent(valuesToFill);
 			}
 
-			Assert.AreEqual(3, processor.ImagesPart.Count());
+			Assert.Equal(3, processor.ImagesPart.Count());
 
-			Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()), 
+			Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()), 
 				RemoveRembed(processor.Document.ToString().Trim()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingImageInsideAList_CorrectFiledItems_Success()
 		{
-			var templateDocumentDocx = Resources.TemplateWithImagesInsideList;
+		    var templateDocumentDocx = Resources.TemplateWithImagesInsideList;
 			var expectedDocument = XDocument.Parse(Resources.DocumentWithImagesInsideListFilledAndRemovedCC);
 
 			var valuesToFill = new Content(
@@ -1138,16 +1136,16 @@ namespace TemplateEngine.Docx.Tests
 					.FillContent(valuesToFill);
 			}
 
-			Assert.AreEqual(3, processor.ImagesPart.Count());
+			Assert.Equal(3, processor.ImagesPart.Count());
 
-			Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()), 
+			Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()), 
 				RemoveRembed(processor.Document.ToString().Trim()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingFieldsInHeaderAndFooter_WithCorrectValues_Success()
 		{
-			var templateDocumentDocx = Resources.TemplateEmptyWithFieldsInHeaderAndFooter;
+		    var templateDocumentDocx = Resources.TemplateEmptyWithFieldsInHeaderAndFooter;
 			var expectedHeader = XDocument.Parse(Resources.DocumentWithFieldFilledInHeaderAndFooter_header);
 			var expectedFooter = XDocument.Parse(Resources.DocumentWithFieldFilledInHeaderAndFooter_footer);
 
@@ -1165,16 +1163,16 @@ namespace TemplateEngine.Docx.Tests
 					.FillContent(valuesToFill);
 			}
 
-			Assert.AreEqual(processor.HeaderParts.Count, 1);
-			Assert.AreEqual(processor.FooterParts.Count, 1);
+			Assert.Equal(processor.HeaderParts.Count, 1);
+			Assert.Equal(processor.FooterParts.Count, 1);
 
-			Assert.AreEqual(expectedHeader.ToString().Trim(), processor.HeaderParts.First().Value.ToString().Trim());
-			Assert.AreEqual(expectedFooter.ToString().Trim(), processor.FooterParts.First().Value.ToString().Trim());
+			Assert.Equal(expectedHeader.ToString().Trim(), processor.HeaderParts.First().Value.ToString().Trim());
+			Assert.Equal(expectedFooter.ToString().Trim(), processor.FooterParts.First().Value.ToString().Trim());
 		}
-		[TestMethod]
+		[Fact]
 		public void FillingFieldsInHeaderAndFooter_WithCorrectValuesAndRemoveContentControls_Success()
 		{
-			var templateDocumentDocx = Resources.TemplateEmptyWithFieldsInHeaderAndFooter;
+		    var templateDocumentDocx = Resources.TemplateEmptyWithFieldsInHeaderAndFooter;
 			var expectedHeader = XDocument.Parse(Resources.DocumentWithFieldFilledInHeaderAndFooterAndRemovedCC_header);
 			var expectedFooter = XDocument.Parse(Resources.DocumentWithFieldFilledInHeaderAndFooterAndRemovedCC_footer);
 
@@ -1192,17 +1190,17 @@ namespace TemplateEngine.Docx.Tests
 					.FillContent(valuesToFill);
 			}
 
-			Assert.AreEqual(processor.HeaderParts.Count, 1);
-			Assert.AreEqual(processor.FooterParts.Count, 1);
+			Assert.Equal(processor.HeaderParts.Count, 1);
+			Assert.Equal(processor.FooterParts.Count, 1);
 
-			Assert.AreEqual(expectedHeader.ToString().Trim(), processor.HeaderParts.First().Value.ToString().Trim());
-			Assert.AreEqual(expectedFooter.ToString().Trim(), processor.FooterParts.First().Value.ToString().Trim());
+			Assert.Equal(expectedHeader.ToString().Trim(), processor.HeaderParts.First().Value.ToString().Trim());
+			Assert.Equal(expectedFooter.ToString().Trim(), processor.FooterParts.First().Value.ToString().Trim());
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FillingTwoLists_InMainDocumentAndInFooter_Success()
 		{
-			var templateDocumentDocx = Resources.TemplateWithTwoListsInMainDocumentAndInFooter;
+		    var templateDocumentDocx = Resources.TemplateWithTwoListsInMainDocumentAndInFooter;
 			var expectedDocument = XDocument.Parse(Resources.DocumentWithTwoListsInMainDocumentAndInFooter_document);
 			var expectedFooter = XDocument.Parse(Resources.DocumentWithTwoListsInMainDocumentAndInFooter_footer);
 
@@ -1237,13 +1235,13 @@ namespace TemplateEngine.Docx.Tests
 					.FillContent(valuesToFill);
 			}
 
-			Assert.AreEqual(processor.FooterParts.Count, 1);
+			Assert.Equal(processor.FooterParts.Count, 1);
 
-			Assert.AreEqual(expectedDocument.ToString().Trim(), processor.Document.ToString().Trim());
-			Assert.AreEqual(expectedFooter.ToString().Trim(), processor.FooterParts.First().Value.ToString().Trim());
+			Assert.Equal(expectedDocument.ToString().Trim(), processor.Document.ToString().Trim());
+			Assert.Equal(expectedFooter.ToString().Trim(), processor.FooterParts.First().Value.ToString().Trim());
 		}
 
-        [TestMethod]
+        [Fact]
         public void FillingRepeatContent_WithCorrectValues_Success()
         {
             var templateDocumentDocx = Resources.TemplateWithRepeatContentWithImagesAndFields;
@@ -1279,10 +1277,10 @@ namespace TemplateEngine.Docx.Tests
                     .FillContent(valuesToFill);
             }
 
-            Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()), RemoveRembed(processor.Document.ToString().Trim()));
+            Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()), RemoveRembed(processor.Document.ToString().Trim()));
         }
 
-        [TestMethod]
+        [Fact]
         public void FillingRepeatContent_WithCorrectValuesAndRemoveContentControls_Success()
         {
             var templateDocumentDocx = Resources.TemplateWithRepeatContentWithImagesAndFields;
@@ -1319,10 +1317,17 @@ namespace TemplateEngine.Docx.Tests
                     .FillContent(valuesToFill);
             }
 
-            Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()), RemoveRembed(processor.Document.ToString().Trim()));
+            Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()), RemoveRembed(processor.Document.ToString().Trim()));
         }
-        
-        [TestMethod]
+
+        static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        [Fact]
         public void FillingRepeatContent_WithImageTableAndList_Success()
         {
             var templateDocumentDocx = Resources.TemplateWithRepeatContentWithImageTableAndList;
@@ -1384,13 +1389,13 @@ namespace TemplateEngine.Docx.Tests
             }
 
 
-            Assert.AreEqual(3, processor.ImagesPart.Count());
+            Assert.Equal(3, processor.ImagesPart.Count());
 
-            Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()),
                 RemoveRembed(processor.Document.ToString().Trim()));
         }
 
-        [TestMethod]
+        [Fact]
         public void FillingSingleImageInHeader_Success()
         {
             var templateDocumentDocx = Resources.TemplateWithSingleImageInHeader;
@@ -1415,20 +1420,20 @@ namespace TemplateEngine.Docx.Tests
                 resultImage = GetImageFromPart(processor.HeaderImagesParts.First().Value, 0);
             }
 
-            Assert.AreEqual(1, processor.HeaderParts.Count);
-            Assert.AreEqual(1, processor.HeaderImagesParts.Count);
-            Assert.AreEqual(processor.HeaderParts.First().Key, processor.HeaderImagesParts.First().Key);
-            Assert.IsNotNull(resultImage);
-            Assert.IsTrue(resultImage.SequenceEqual(newFile));
+            Assert.Equal(1, processor.HeaderParts.Count);
+            Assert.Equal(1, processor.HeaderImagesParts.Count);
+            Assert.Equal(processor.HeaderParts.First().Key, processor.HeaderImagesParts.First().Key);
+            Assert.NotNull(resultImage);
+            Assert.True(resultImage.SequenceEqual(newFile));
 
-            Assert.AreEqual(expectedDocument.ToString().Trim(),
+            Assert.Equal(expectedDocument.ToString().Trim(),
                 processor.Document.ToString().Trim());
 
-            Assert.AreEqual(RemoveRembed(expectedHeader.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedHeader.ToString().Trim()),
                RemoveRembed(processor.HeaderParts.First().Value.ToString().Trim()));
         }
 
-        [TestMethod]
+        [Fact]
         public void FillingSingleImageInHeader_PreverseContentControl_Success()
         {
             var templateDocumentDocx = Resources.TemplateWithSingleImageInHeader;
@@ -1453,21 +1458,21 @@ namespace TemplateEngine.Docx.Tests
                 resultImage = GetImageFromPart(processor.HeaderImagesParts.First().Value, 0);
             }
 
-            Assert.AreEqual(1, processor.HeaderParts.Count);
-            Assert.AreEqual(1, processor.HeaderImagesParts.Count);
-            Assert.AreEqual(processor.HeaderParts.First().Key, processor.HeaderImagesParts.First().Key);
-            Assert.IsNotNull(resultImage);
-            Assert.IsTrue(resultImage.SequenceEqual(newFile));
+            Assert.Equal(1, processor.HeaderParts.Count);
+            Assert.Equal(1, processor.HeaderImagesParts.Count);
+            Assert.Equal(processor.HeaderParts.First().Key, processor.HeaderImagesParts.First().Key);
+            Assert.NotNull(resultImage);
+            Assert.True(resultImage.SequenceEqual(newFile));
 
-            Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()),
                 RemoveRembed(processor.Document.ToString().Trim()));
 
-            Assert.AreEqual(RemoveRembed(expectedHeader.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedHeader.ToString().Trim()),
                RemoveRembed(processor.HeaderParts.First().Value.ToString().Trim()));
         }
 
 
-        [TestMethod]
+        [Fact]
         public void FillingSingleImageInFooter_Success()
         {
             var templateDocumentDocx = Resources.TemplateWithSingleImageInFooter;
@@ -1492,21 +1497,21 @@ namespace TemplateEngine.Docx.Tests
                 resultImage = GetImageFromPart(processor.FooterImagesParts.First().Value, 0);
             }
 
-            Assert.AreEqual(1, processor.FooterParts.Count);
-            Assert.AreEqual(1, processor.FooterImagesParts.Count);
-            Assert.AreEqual(processor.FooterParts.First().Key, processor.FooterImagesParts.First().Key);
-            Assert.IsNotNull(resultImage);
-            Assert.IsTrue(resultImage.SequenceEqual(newFile));
+            Assert.Equal(1, processor.FooterParts.Count);
+            Assert.Equal(1, processor.FooterImagesParts.Count);
+            Assert.Equal(processor.FooterParts.First().Key, processor.FooterImagesParts.First().Key);
+            Assert.NotNull(resultImage);
+            Assert.True(resultImage.SequenceEqual(newFile));
 
-            Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()),
                 RemoveRembed(processor.Document.ToString().Trim()));
 
-            Assert.AreEqual(RemoveRembed(expectedFooter.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedFooter.ToString().Trim()),
               RemoveRembed(processor.FooterParts.First().Value.ToString().Trim()));
         }
 
 
-        [TestMethod]
+        [Fact]
         public void FillingImagesInHeaderBodyAndFooter_Success()
         {
             var templateDocumentDocx = Resources.TemplateWithImagesInHeaderBodyAndFooter;
@@ -1542,29 +1547,29 @@ namespace TemplateEngine.Docx.Tests
                 resultFooterImage = GetImageFromPart(processor.FooterImagesParts.First().Value, 0);
             }
 
-            Assert.AreEqual(1, processor.HeaderParts.Count);
-            Assert.AreEqual(1, processor.HeaderImagesParts.Count);
-            Assert.AreEqual(processor.HeaderParts.First().Key, processor.HeaderImagesParts.First().Key);
-            Assert.IsNotNull(resultHeaderImage);
-            Assert.IsTrue(resultHeaderImage.SequenceEqual(headerFile));
+            Assert.Equal(1, processor.HeaderParts.Count);
+            Assert.Equal(1, processor.HeaderImagesParts.Count);
+            Assert.Equal(processor.HeaderParts.First().Key, processor.HeaderImagesParts.First().Key);
+            Assert.NotNull(resultHeaderImage);
+            Assert.True(resultHeaderImage.SequenceEqual(headerFile));
 
-            Assert.AreEqual(1, processor.FooterParts.Count);
-            Assert.AreEqual(1, processor.FooterImagesParts.Count);
-            Assert.AreEqual(processor.FooterParts.First().Key, processor.FooterImagesParts.First().Key);
-            Assert.IsNotNull(resultFooterImage);
-            Assert.IsTrue(resultFooterImage.SequenceEqual(footerFile));
+            Assert.Equal(1, processor.FooterParts.Count);
+            Assert.Equal(1, processor.FooterImagesParts.Count);
+            Assert.Equal(processor.FooterParts.First().Key, processor.FooterImagesParts.First().Key);
+            Assert.NotNull(resultFooterImage);
+            Assert.True(resultFooterImage.SequenceEqual(footerFile));
 
-            Assert.AreEqual(1, processor.ImagesPart.Count());
-            Assert.IsNotNull(resultBodyImage);
-            Assert.IsTrue(resultBodyImage.SequenceEqual(bodyFile));
+            Assert.Equal(1, processor.ImagesPart.Count());
+            Assert.NotNull(resultBodyImage);
+            Assert.True(resultBodyImage.SequenceEqual(bodyFile));
 
-            Assert.AreEqual(RemoveRembed(expectedDocument.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedDocument.ToString().Trim()),
                 RemoveRembed(processor.Document.ToString().Trim()));
 
-            Assert.AreEqual(RemoveRembed(expectedFooter.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedFooter.ToString().Trim()),
              RemoveRembed(processor.FooterParts.First().Value.ToString().Trim()));
 
-            Assert.AreEqual(RemoveRembed(expectedHeader.ToString().Trim()),
+            Assert.Equal(RemoveRembed(expectedHeader.ToString().Trim()),
              RemoveRembed(processor.HeaderParts.First().Value.ToString().Trim()));
         }
 

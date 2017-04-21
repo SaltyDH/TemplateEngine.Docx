@@ -1,43 +1,42 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace TemplateEngine.Docx.Tests
 {
-    [TestClass]
     public class FieldContentTests
     {
-        [TestMethod]
+        [Fact]
         public void FieldContentConstructorWithArguments_FillNameAndValue()
         {
             var fieldContent = new FieldContent("Name", "Value");
 
-            Assert.AreEqual("Name", fieldContent.Name);
-            Assert.AreEqual("Value", fieldContent.Value);
+            Assert.Equal("Name", fieldContent.Name);
+            Assert.Equal("Value", fieldContent.Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void EqualsTest_ValuesAreEquel_Equals()
         {
             var firstFieldContent = new FieldContent("Name", "Value");
             var secondFieldContent = new FieldContent("Name", "Value");
 
-            Assert.IsTrue(firstFieldContent.Equals(secondFieldContent));
+            Assert.True(firstFieldContent.Equals(secondFieldContent));
         }
 
-        [TestMethod]
+        [Fact]
         public void EqualsTest_ValuesAreNotEqual_NotEquals()
         {
             var firstFieldContent = new FieldContent("Name", "Value");
             var secondFieldContent = new FieldContent("Name", "Value2");
 
-            Assert.IsFalse(firstFieldContent.Equals(secondFieldContent));
+            Assert.False(firstFieldContent.Equals(secondFieldContent));
         }
-        [TestMethod]
+        [Fact]
         public void EqualsTest_CompareWithNull_NotEquals()
         {
             var firstFieldContent = new FieldContent("Name", "Value");
             var secondFieldContent = new FieldContent("Name", "Value2");
 
-            Assert.IsFalse(firstFieldContent.Equals(null));
+            Assert.False(firstFieldContent.Equals(null));
         }
     }
 }

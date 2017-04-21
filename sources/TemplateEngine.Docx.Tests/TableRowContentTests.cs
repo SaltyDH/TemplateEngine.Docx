@@ -1,29 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace TemplateEngine.Docx.Tests
 {
-    [TestClass]
     public class TableRowContentTests
     {
-        [TestMethod]
+        [Fact]
         public void TableRowContentConstructorWithEnumerable_FillsFields()
         {
             var tableRowContent = new TableRowContent(new List<FieldContent>());
 
-            Assert.IsNotNull(tableRowContent.Fields);
+            Assert.NotNull(tableRowContent.Fields);
         }
 
-        [TestMethod]
+        [Fact]
         public void TableRowContentConstructorWithFields_FillsFields()
         {
             var tableRowContent = new TableRowContent(new FieldContent(), new FieldContent());
 
-            Assert.AreEqual(2, tableRowContent.Fields.Count());
+            Assert.Equal(2, tableRowContent.Fields.Count());
         }
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ValuesAreEqual_Equals()
 		{
 			var firstTableRow = new TableRowContent(
@@ -34,10 +33,10 @@ namespace TemplateEngine.Docx.Tests
 				new FieldContent("Name", "Eric"),
 				new FieldContent("Role", "Program Manager"));
 
-			Assert.IsTrue(firstTableRow.Equals(secondTableRow));
+			Assert.True(firstTableRow.Equals(secondTableRow));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ValuesDifferByFieldName_NotEquals()
 		{
 			var firstTableRow = new TableRowContent(
@@ -48,10 +47,10 @@ namespace TemplateEngine.Docx.Tests
 				new FieldContent("Name2", "Eric"),
 				new FieldContent("Role", "Program Manager"));
 
-			Assert.IsFalse(firstTableRow.Equals(secondTableRow));
+			Assert.False(firstTableRow.Equals(secondTableRow));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ValuesDifferByFieldValue_NotEquals()
 		{
 			var firstTableRow = new TableRowContent(
@@ -62,10 +61,10 @@ namespace TemplateEngine.Docx.Tests
 				new FieldContent("Name", "Eric2"),
 				new FieldContent("Role", "Program Manager"));
 
-			Assert.IsFalse(firstTableRow.Equals(secondTableRow));
+			Assert.False(firstTableRow.Equals(secondTableRow));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ValuesDifferByFieldsCount_NotEquals()
 		{
 			var firstTableRow = new TableRowContent(
@@ -75,16 +74,16 @@ namespace TemplateEngine.Docx.Tests
 				new FieldContent("Name", "Eric"),
 				new FieldContent("Role", "Program Manager"));
 
-			Assert.IsFalse(firstTableRow.Equals(secondTableRow));
+			Assert.False(firstTableRow.Equals(secondTableRow));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_CompareWithNull_NotEquals()
 		{
 			var firstTableRow = new TableRowContent(
 				new FieldContent("Name", "Eric"));
 			
-			Assert.IsFalse(firstTableRow.Equals(null));
+			Assert.False(firstTableRow.Equals(null));
 		}
     }
 }

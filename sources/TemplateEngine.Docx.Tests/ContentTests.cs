@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Xunit;
 
 namespace TemplateEngine.Docx.Tests
 {
-	[TestClass]
 	public class ContentTests
 	{
-		[TestMethod]
+		[Fact]
 		public void ContentSerializationTest_SerializeToJson_Success()
 		{
 			var valuesToFill = new Content(
 				// Add field.
-				new FieldContent("Report date", new DateTime(2000, 01, 01).ToShortDateString()),
+				new FieldContent("Report date", new DateTime(2000, 01, 01).ToString("d")),
 				
 				// Add table.
 				new TableContent("Team Members Table")
@@ -44,16 +42,16 @@ namespace TemplateEngine.Docx.Tests
 
 			var serialized = JsonConvert.SerializeObject(valuesToFill);
 			
-			Assert.AreEqual("{\"Repeats\":[{\"Name\":\"Repeat\",\"Items\":[{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Weekend\",\"Value\":\"Saturday\"}],\"Images\":[]},{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Weekend\",\"Value\":\"Sunday\"}],\"Images\":[]}],\"FieldNames\":[\"Weekend\"]}],\"Tables\":[{\"Name\":\"Team Members Table\",\"Rows\":[{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Eric\"},{\"Name\":\"Role\",\"Value\":\"Program Manager\"}],\"Images\":[]},{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Bob\"},{\"Name\":\"Role\",\"Value\":\"Developer\"}],\"Images\":[]}],\"FieldNames\":[\"Name\",\"Role\"]}],\"Lists\":[{\"Name\":\"Team Members Nested List\",\"Items\":[{\"NestedFields\":[{\"NestedFields\":null,\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Eric\"}],\"Images\":[]},{\"NestedFields\":null,\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Ann\"}],\"Images\":[]}],\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Role\",\"Value\":\"Program Manager\"}],\"Images\":[]},{\"NestedFields\":[{\"NestedFields\":null,\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Bob\"}],\"Images\":[]},{\"NestedFields\":null,\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Richard\"}],\"Images\":[]}],\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Role\",\"Value\":\"Developer\"}],\"Images\":[]}],\"FieldNames\":[\"Role\",\"Name\"]}],\"Fields\":[{\"Name\":\"Report date\",\"Value\":\"01.01.2000\"}],\"Images\":[{\"Name\":\"photo\",\"Binary\":\"AQID\"}]}", serialized);
+			Assert.Equal("{\"Repeats\":[{\"Name\":\"Repeat\",\"Items\":[{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Weekend\",\"Value\":\"Saturday\"}],\"Images\":[]},{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Weekend\",\"Value\":\"Sunday\"}],\"Images\":[]}],\"FieldNames\":[\"Weekend\"]}],\"Tables\":[{\"Name\":\"Team Members Table\",\"Rows\":[{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Eric\"},{\"Name\":\"Role\",\"Value\":\"Program Manager\"}],\"Images\":[]},{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Bob\"},{\"Name\":\"Role\",\"Value\":\"Developer\"}],\"Images\":[]}],\"FieldNames\":[\"Name\",\"Role\"]}],\"Lists\":[{\"Name\":\"Team Members Nested List\",\"Items\":[{\"NestedFields\":[{\"NestedFields\":null,\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Eric\"}],\"Images\":[]},{\"NestedFields\":null,\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Ann\"}],\"Images\":[]}],\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Role\",\"Value\":\"Program Manager\"}],\"Images\":[]},{\"NestedFields\":[{\"NestedFields\":null,\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Bob\"}],\"Images\":[]},{\"NestedFields\":null,\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Name\",\"Value\":\"Richard\"}],\"Images\":[]}],\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[{\"Name\":\"Role\",\"Value\":\"Developer\"}],\"Images\":[]}],\"FieldNames\":[\"Role\",\"Name\"]}],\"Fields\":[{\"Name\":\"Report date\",\"Value\":\"01.01.2000\"}],\"Images\":[{\"Name\":\"photo\",\"Binary\":\"AQID\"}]}", serialized);
 
 		}
 
-		[TestMethod]
+        [Fact]
 		public void ContentDeserializationTest_DeserializeFromJson_Success()
 		{
 			var valuesToFill = new Content(
 				// Add field.
-				new FieldContent("Report date", new DateTime(2000, 01, 01).ToShortDateString()),
+				new FieldContent("Report date", new DateTime(2000, 01, 01).ToString("d")),
 				// Add table.
 				new TableContent("Team Members Table")
 					.AddRow(
@@ -79,20 +77,20 @@ namespace TemplateEngine.Docx.Tests
 
 			var deserialized = JsonConvert.DeserializeObject<Content>(serialized);
 
-			Assert.IsTrue(valuesToFill.Equals(deserialized));
+			Assert.True(valuesToFill.Equals(deserialized));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ContentSerializationTest_EmptyContentSerializeToJson_Success()
 		{
 			var valuesToFill = new Content();
 
 			var serialized = JsonConvert.SerializeObject(valuesToFill);
 
-			Assert.AreEqual("{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[],\"Images\":[]}", serialized);
+			Assert.Equal("{\"Repeats\":[],\"Tables\":[],\"Lists\":[],\"Fields\":[],\"Images\":[]}", serialized);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ContentDeserializationTest_EmptyContentDeserializeFromJson_Success()
 		{
 			var valuesToFill = new Content();
@@ -101,16 +99,16 @@ namespace TemplateEngine.Docx.Tests
 
 			var deserialized = JsonConvert.DeserializeObject<Content>(serialized);
 
-			Assert.IsTrue(valuesToFill.Equals(deserialized));
+			Assert.True(valuesToFill.Equals(deserialized));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ObjectsAreEqual_Equals()
 		{
 			
 			var firstValuesToFill = new Content(
 				// Add field.
-				new FieldContent("Report date", new DateTime(2000, 01, 01).ToShortDateString()),
+				new FieldContent("Report date", new DateTime(2000, 01, 01).ToString("d")),
 				// Add table.
 				new TableContent("Team Members Table")
 					.AddRow(
@@ -133,7 +131,7 @@ namespace TemplateEngine.Docx.Tests
 
 			var secondValuesToFill = new Content(
 				// Add field.
-				new FieldContent("Report date", new DateTime(2000, 01, 01).ToShortDateString()),
+				new FieldContent("Report date", new DateTime(2000, 01, 01).ToString("d")),
 				// Add table.
 				new TableContent("Team Members Table")
 					.AddRow(
@@ -154,18 +152,18 @@ namespace TemplateEngine.Docx.Tests
 				new ImageContent("photo", new byte[] { 1, 2, 3 })
 				);
 
-			Assert.IsTrue(firstValuesToFill.Equals(secondValuesToFill));
+			Assert.True(firstValuesToFill.Equals(secondValuesToFill));
 
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ObjectsDifferByItemsCount_NotEquals()
 		{
 
 			var firstValuesToFill = new Content(
 				// Add field.
-				new FieldContent("Report date", new DateTime(2000, 01, 01).ToShortDateString()),
+				new FieldContent("Report date", new DateTime(2000, 01, 01).ToString("d")),
 				// Add table.
 				new TableContent("Team Members Table")
 					.AddRow(
@@ -178,20 +176,20 @@ namespace TemplateEngine.Docx.Tests
 
 			var secondValuesToFill = new Content(
 				// Add field.
-				new FieldContent("Report date", new DateTime(2000, 01, 01).ToShortDateString())
+				new FieldContent("Report date", new DateTime(2000, 01, 01).ToString("d"))
 				);
 
-			Assert.IsFalse(firstValuesToFill.Equals(secondValuesToFill));
+			Assert.False(firstValuesToFill.Equals(secondValuesToFill));
 
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_CopareWithNull_NotEquals()
 		{
 
 			var firstValuesToFill = new Content(
 				// Add field.
-				new FieldContent("Report date", new DateTime(2000, 01, 01).ToShortDateString()),
+				new FieldContent("Report date", new DateTime(2000, 01, 01).ToString("d")),
 				// Add table.
 				new TableContent("Team Members Table")
 					.AddRow(
@@ -202,7 +200,7 @@ namespace TemplateEngine.Docx.Tests
 						new FieldContent("Role", "Developer"))
 				);
 
-			Assert.IsFalse(firstValuesToFill.Equals(null));
+			Assert.False(firstValuesToFill.Equals(null));
 
 		}
 	}

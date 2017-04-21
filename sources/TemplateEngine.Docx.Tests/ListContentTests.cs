@@ -1,49 +1,48 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace TemplateEngine.Docx.Tests
 {
-	[TestClass]
 	public class ListContentTests
 	{
 
-		[TestMethod]
+		[Fact]
 		public void ListContentConstructorWithName_FillsName()
 		{
 			var listContent = new ListContent("Name");
 
-			Assert.AreEqual("Name", listContent.Name);
+			Assert.Equal("Name", listContent.Name);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ListContentConstructorWithNameAndEnumerableFieldContent_FillsNameAndItems()
 		{
 			var listContent = new ListContent("Name", new List<ListItemContent>());
 
-			Assert.IsNotNull(listContent.Items);
-			Assert.AreEqual("Name", listContent.Name);
+			Assert.NotNull(listContent.Items);
+			Assert.Equal("Name", listContent.Name);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ListContentConstructorWithNameAndItems_FillsNameAndItems()
 		{
 			var listContent = new ListContent("Name", new ListItemContent(), new ListItemContent());
 
-			Assert.AreEqual(2, listContent.Items.Count());
-			Assert.AreEqual("Name", listContent.Name);
+			Assert.Equal(2, listContent.Items.Count());
+			Assert.Equal("Name", listContent.Name);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ListContentConstructorWithNameAndEnumerableListItemContent_FillsNameAndItems()
 		{
 			var listContent = new ListContent("Name", new List<ListItemContent>());
 
-			Assert.IsNotNull(listContent.Items);
-			Assert.AreEqual("Name", listContent.Name);
+			Assert.NotNull(listContent.Items);
+			Assert.Equal("Name", listContent.Name);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ListContentGetFieldnames()
 		{
 			var listContent = new ListContent("Name", 
@@ -54,48 +53,48 @@ namespace TemplateEngine.Docx.Tests
 					new ListItemContent("Subheader", "value2",
 						new ListItemContent("Subsubheader", "value"))));
 
-			Assert.IsNotNull(listContent.Items);
-			Assert.AreEqual("Name", listContent.Name);
-			Assert.AreEqual(3, listContent.FieldNames.Count());
-			Assert.AreEqual("Header", listContent.FieldNames.ToArray()[0]);
-			Assert.AreEqual("Subheader", listContent.FieldNames.ToArray()[1]);
-			Assert.AreEqual("Subsubheader", listContent.FieldNames.ToArray()[2]);
+			Assert.NotNull(listContent.Items);
+			Assert.Equal("Name", listContent.Name);
+			Assert.Equal(3, listContent.FieldNames.Count());
+			Assert.Equal("Header", listContent.FieldNames.ToArray()[0]);
+			Assert.Equal("Subheader", listContent.FieldNames.ToArray()[1]);
+			Assert.Equal("Subsubheader", listContent.FieldNames.ToArray()[2]);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ListContentFluentConstructorWithNameAndItems_FillsNameAndItems()
 		{
 			var listContent = ListContent.Create("Name", new ListItemContent(), new ListItemContent());
 
-			Assert.AreEqual(2, listContent.Items.Count());
-			Assert.AreEqual("Name", listContent.Name);
+			Assert.Equal(2, listContent.Items.Count());
+			Assert.Equal("Name", listContent.Name);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ListContentFluentConstructorWithNameAndEnumerableListItemContent_FillsNameAndItems()
 		{
 			var listContent = ListContent.Create("Name", new List<ListItemContent>());
 
-			Assert.IsNotNull(listContent.Items);
-			Assert.AreEqual("Name", listContent.Name);
+			Assert.NotNull(listContent.Items);
+			Assert.Equal("Name", listContent.Name);
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void ListContentFluentAddItem_FillsNameAndItems()
 		{
 			var listContent = ListContent.Create("Name", new List<ListItemContent>())
 				.AddItem(ListItemContent.Create("ItemName", "Name"));
 			
-			Assert.IsNotNull(listContent.Items);
-			Assert.AreEqual("Name", listContent.Name);
-			Assert.AreEqual(listContent.Items.Count, 1);
-			Assert.AreEqual(listContent.Items.First().Fields.Count, 1);
-			Assert.AreEqual(listContent.Items.First().Fields.First().Name, "ItemName");
-			Assert.AreEqual(listContent.Items.First().Fields.First().Value, "Name");
+			Assert.NotNull(listContent.Items);
+			Assert.Equal("Name", listContent.Name);
+			Assert.Equal(listContent.Items.Count, 1);
+			Assert.Equal(listContent.Items.First().Fields.Count, 1);
+			Assert.Equal(listContent.Items.First().Fields.First().Name, "ItemName");
+			Assert.Equal(listContent.Items.First().Fields.First().Value, "Name");
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ValuesAreEqual_Equals()
 		{
 			var firstListContent = new ListContent("Name",
@@ -115,11 +114,11 @@ namespace TemplateEngine.Docx.Tests
 					new ListItemContent("Subsubheader", "value"))));
 
 
-			Assert.IsTrue(firstListContent.Equals(secondListContent));
+			Assert.True(firstListContent.Equals(secondListContent));
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ValuesDifferByName_NotEquals()
 		{
 			var firstListContent = new ListContent("Name1",
@@ -139,10 +138,10 @@ namespace TemplateEngine.Docx.Tests
 					new ListItemContent("Subsubheader", "value"))));
 
 
-			Assert.IsFalse(firstListContent.Equals(secondListContent));
+			Assert.False(firstListContent.Equals(secondListContent));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ValuesDifferByListItemValue_NotEquals()
 		{
 			var firstListContent = new ListContent("Name",
@@ -162,10 +161,10 @@ namespace TemplateEngine.Docx.Tests
 					new ListItemContent("Subsubheader", "value"))));
 
 
-			Assert.IsFalse(firstListContent.Equals(secondListContent));
+			Assert.False(firstListContent.Equals(secondListContent));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_ValuesDifferByNestedValue_NotEquals()
 		{
 			var firstListContent = new ListContent("Name",
@@ -185,9 +184,9 @@ namespace TemplateEngine.Docx.Tests
 					new ListItemContent("Subsubheader2", "value"))));
 
 
-			Assert.IsFalse(firstListContent.Equals(secondListContent));
+			Assert.False(firstListContent.Equals(secondListContent));
 		}
-		[TestMethod]
+		[Fact]
 		public void EqualsTest_CompareWithNull_NotEquals()
 		{
 			var firstListContent = new ListContent("Name",
@@ -198,7 +197,7 @@ namespace TemplateEngine.Docx.Tests
 				new ListItemContent("Subheader", "value",
 					new ListItemContent("Subsubheader1", "value"))));
 			
-			Assert.IsFalse(firstListContent.Equals(null));
+			Assert.False(firstListContent.Equals(null));
 		}
 	}
 }

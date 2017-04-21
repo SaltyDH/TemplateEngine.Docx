@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 
 namespace TemplateEngine.Docx
@@ -25,8 +26,14 @@ namespace TemplateEngine.Docx
 		{
 			if (other == null) return false;
 
-			return Name.Equals(other.Name, StringComparison.InvariantCultureIgnoreCase) &&
-			       Binary.SequenceEqual(other.Binary);
+#if NETSTANDARD1_6
+            var comparer = CultureInfo.InvariantCulture.CompareInfo.GetStringComparer(CompareOptions.IgnoreCase);
+#else
+		    var comparer = StringComparer.InvariantCultureIgnoreCase;
+#endif
+
+            return comparer.Equals(Name, other.Name)
+		           && Binary.SequenceEqual(other.Binary);
 		}
 
 		public bool Equals(IContentItem other)
@@ -41,6 +48,6 @@ namespace TemplateEngine.Docx
 			return new {Name, Binary}.GetHashCode();
 		}
 
-		#endregion
+#endregion
 	}
 }

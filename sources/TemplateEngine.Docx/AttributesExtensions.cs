@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Reflection;
 
 namespace TemplateEngine.Docx
 {
@@ -7,10 +8,11 @@ namespace TemplateEngine.Docx
 		public static string GetContentItemName(this IContentItem value)
 		{
 			var contentItemNameAttribute = value.GetType()
+                .GetTypeInfo()
 				.GetCustomAttributes(typeof(ContentItemNameAttribute), true)
 				   .FirstOrDefault() as ContentItemNameAttribute;
 
-			return contentItemNameAttribute != null ? contentItemNameAttribute.Name : null;
+			return contentItemNameAttribute?.Name;
 		}
 	}
 }
